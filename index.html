@@ -135,7 +135,7 @@
             max-width: 500px;
             width: 90%;
             position: relative;
-            z-index: 1;
+            z-index: 10;
             animation: slideIn 0.8s ease-out, float 6s ease-in-out infinite;
         }
 
@@ -233,6 +233,8 @@
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            /* Keep buttons clickable */
         }
 
         #yesBtn {
@@ -468,6 +470,63 @@
                 font-size: 1.2rem;
             }
         }
+
+        /* Photo Tiles (New Design) */
+        .photo-tile {
+            position: absolute;
+            width: 160px;
+            height: auto;
+            min-height: 120px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            /* Photo frame border */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            /* Smooth rounded corners */
+            z-index: 100;
+            /* Ensure on top of everything */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .photo-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            /* inner radius */
+            display: block;
+            aspect-ratio: 1/1;
+            /* Ensure square photos or adjust as needed */
+        }
+
+        .photo-float {
+            animation: floatingTile 15s linear forwards;
+        }
+
+        @keyframes floatingTile {
+            0% {
+                transform: translateY(110vh) rotate(-10deg) scale(0.6);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(10deg) scale(1.1);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -574,25 +633,41 @@
             "You're the rhythm to my algorithm! 🎵",
             "I'll learn Bharatanatyam for you! 💃😅",
             "Piyu.setStatus('MyWife'); 💍",
-            "while(true) { loveYou(); } ♾️"
+            "while(true) { loveYou(); } ♾️",
+            "Error 404: Rejection not found! 🚫",
+            "Sudo command: Say YES! 🔒",
+            "Git commit -m 'Forever' 💏",
+            "Warning: Saying no causes heart.break() 💔",
+            "I promise to carry your bags! 🛍️",
+            "Unlimited free tech support for life! 🛠️",
+            "I'll be your personal photographer! 📸",
+            "Our love story > Twilight! 🧛‍♂️❌",
+            "Don't make me use Comic Sans! 😱",
+            "I'll watch all your cheesy movies! 🎬",
+            "Undefined logic: You saying no! ❓"
         ];
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
-            const container = document.querySelector('.container');
 
-            // Get container and button dimensions
-            const containerRect = container.getBoundingClientRect();
-            const noBtnRect = noBtn.getBoundingClientRect();
-            const yesBtnRect = yesBtn.getBoundingClientRect();
+            // Force position fixed on first move to allow it to leave the container
+            if (noBtn.style.position !== 'fixed') {
+                noBtn.style.position = 'fixed';
+                noBtn.style.zIndex = '1000';
+            }
 
+            // Get button dimensions
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
+            const yesBtnRect = yesBtn.getBoundingClientRect();
 
-            // Calculate safe boundaries
-            const maxX = containerRect.width - btnWidth - 40;
-            const maxY = 200;
+            // Increase safety margin to keep button on screen
+            // Use 50px margin from edges
+            const margin = 50;
+            // Prevent going off screen (ensure max is at least margin)
+            const maxX = Math.max(margin, window.innerWidth - btnWidth - margin);
+            const maxY = Math.max(margin, window.innerHeight - btnHeight - margin);
 
             let newX, newY;
             let attempts = 0;
@@ -600,22 +675,17 @@
 
             // Keep trying until we find a position that doesn't overlap with Yes button
             do {
-                newX = Math.random() * maxX;
-                newY = Math.random() * maxY - 100;
-
-                // Calculate the would-be position of No button
-                const noLeft = containerRect.left + newX;
-                const noTop = containerRect.top + newY + 200; // approximate offset
-                const noRight = noLeft + btnWidth;
-                const noBottom = noTop + btnHeight;
+                // Ensure min position is at least 'margin' (e.g. 50px)
+                newX = margin + Math.random() * (maxX - margin);
+                newY = margin + Math.random() * (maxY - margin);
 
                 // Check if it overlaps with Yes button (with extra padding)
-                const padding = 20;
+                const padding = 60; // Larger padding to be safe
                 const overlaps = !(
-                    noRight + padding < yesBtnRect.left ||
-                    noLeft - padding > yesBtnRect.right ||
-                    noBottom + padding < yesBtnRect.top ||
-                    noTop - padding > yesBtnRect.bottom
+                    newX + btnWidth + padding < yesBtnRect.left ||
+                    newX - padding > yesBtnRect.right ||
+                    newY + btnHeight + padding < yesBtnRect.top ||
+                    newY - padding > yesBtnRect.bottom
                 );
 
                 attempts++;
@@ -624,24 +694,32 @@
 
             } while (attempts < maxAttempts);
 
-            // Apply position with smooth transition
+            noBtn.style.transition = 'all 0.2s ease'; // Fast but smooth
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
+            noBtn.style.transform = `scale(${0.9 + Math.random() * 0.2}) rotate(${Math.random() * 20 - 10}deg)`;
+            noBtn.style.zIndex = '1000'; // Ensure it's on top
+
+            // Change color randomly
+            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff'];
+            noBtn.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
             // Update button text with messages
             if (moveCount < messages.length) {
                 noBtn.textContent = messages[moveCount];
                 moveCount++;
             } else {
-                // After all messages, start making Yes button bigger and more tempting
-                noBtn.textContent = "Just give up and say yes! 😄";
+                moveCount = 0; // Loop messages
+                noBtn.textContent = messages[moveCount];
             }
 
             // Make Yes button grow and more prominent
             const currentSize = parseFloat(getComputedStyle(yesBtn).fontSize);
             const currentPadding = parseFloat(getComputedStyle(yesBtn).padding);
-            yesBtn.style.fontSize = (currentSize * 1.08) + 'px';
-            yesBtn.style.padding = (currentPadding * 1.05) + 'px';
+            if (currentSize < 60) { // Limit max size
+                yesBtn.style.fontSize = (currentSize * 1.1) + 'px';
+                yesBtn.style.padding = (currentPadding * 1.05) + 'px';
+            }
             yesBtn.classList.add('heartbeat');
 
             // Add extra glow to Yes button
@@ -663,6 +741,9 @@
 
             // Create confetti
             createConfetti();
+
+            // Start spawning photos immediately!
+            startPhotoHearts(true);
 
             // Add more stars
             for (let i = 0; i < 10; i++) {
@@ -784,13 +865,66 @@
             }
         }
 
-        // Initial position for No button
+        // Initialize state
         window.onload = function () {
             const noBtn = document.getElementById('noBtn');
-            noBtn.style.position = 'relative';
-            noBtn.style.left = '0px';
-            noBtn.style.top = '0px';
+            noBtn.style.position = 'relative'; // Start relative to be in flow
+            noBtn.style.top = 'auto'; // Reset
+            noBtn.style.left = 'auto'; // Reset
         };
+
+        // Photo Bubble Feature
+        function startPhotoHearts(immediate = false) {
+            // Configuration
+            const numberOfPhotos = 10; // Files named 1.jpg to 10.jpg
+            const spawnInterval = 1000; // New photo every 1 second (faster!)
+
+            setInterval(() => {
+                spawnPhotoHeart(numberOfPhotos);
+            }, spawnInterval);
+
+            // Spawn a few immediately if requested
+            if (immediate) {
+                for (let i = 0; i < 5; i++) {
+                    // Very short delays for instant burst
+                    setTimeout(() => spawnPhotoHeart(numberOfPhotos), i * 200);
+                }
+            }
+        }
+
+        function spawnPhotoHeart(maxPhotos) {
+            const container = document.body;
+            const tile = document.createElement('div');
+            tile.className = 'photo-tile photo-float';
+
+            // Random position
+            const left = Math.random() * 90; // 0-90% width
+            tile.style.left = left + '%';
+
+            // Random rotation specific to this element handled in keyframes but add initial random
+            const initialRot = Math.random() * 20 - 10;
+            const randomScale = 0.8 + Math.random() * 0.4;
+            tile.style.transform = `rotate(${initialRot}deg) scale(${randomScale})`;
+
+            // Random photo
+            const photoNum = Math.floor(Math.random() * maxPhotos) + 1;
+            const img = document.createElement('img');
+            img.src = `images/${photoNum}.jpg`;
+            img.onerror = function () {
+                // Fallback if image doesn't exist
+                this.style.display = 'none';
+                tile.style.background = '#feca57';
+                tile.innerHTML = '<div style="font-size: 40px;">💖</div>';
+            };
+
+            tile.appendChild(img);
+            container.appendChild(tile);
+
+            // Cleanup
+            setTimeout(() => {
+                tile.remove();
+            }, 15000); // Remove after animation ends
+        }
     </script>
 </body>
 
