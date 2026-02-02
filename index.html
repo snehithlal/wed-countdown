@@ -21,7 +21,7 @@
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             background-size: 400% 400%;
             animation: galaxyMove 15s ease infinite;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
         }
 
@@ -135,7 +135,7 @@
             max-width: 500px;
             width: 90%;
             position: relative;
-            z-index: 10;
+            z-index: 100;
             animation: slideIn 0.8s ease-out, float 6s ease-in-out infinite;
         }
 
@@ -407,6 +407,8 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 20px;
+            position: relative;
+            z-index: 100;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
                 0 0 40px rgba(255, 105, 180, 0.2);
         }
@@ -469,6 +471,24 @@
             .countdown-title {
                 font-size: 1.2rem;
             }
+
+            /* Make countdown container more compact on mobile */
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            /* Make photos smaller on mobile so they're more visible */
+            .photo-tile {
+                width: 100px;
+                min-height: 75px;
+            }
+
+            /* Enable scrolling on mobile to prevent content from being cropped */
+            body {
+                overflow: auto;
+                min-height: 100vh;
+                height: auto;
+            }
         }
 
         /* Photo Tiles (New Design) */
@@ -477,14 +497,14 @@
             width: 160px;
             height: auto;
             min-height: 120px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px;
-            /* Photo frame border */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
-            /* Smooth rounded corners */
-            z-index: 100;
-            /* Ensure on top of everything */
+            background: transparent;
+            padding: 0;
+            /* No frame */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 105, 180, 0.3);
+            border-radius: 15px;
+            /* Soft rounded for images */
+            z-index: 15;
+            /* Visible on top, but behind countdown box */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -549,7 +569,7 @@
         <!-- Success Screen -->
         <div class="success-screen" id="successScreen">
             <div class="celebration">✨🌟💫</div>
-            <div class="success-message">She said YES! Our stars aligned! 🌌💍</div>
+            <div class="success-message">You said YES! Our stars aligned! 🌌💍</div>
             <div class="emoji" id="coupleEmoji">👰‍♀️💖🤵‍♂️</div>
 
             <!-- Countdown Timer - Now shows first! -->
@@ -662,12 +682,11 @@
             const btnHeight = noBtn.offsetHeight;
             const yesBtnRect = yesBtn.getBoundingClientRect();
 
-            // Increase safety margin to keep button on screen
-            // Use 50px margin from edges
-            const margin = 50;
-            // Prevent going off screen (ensure max is at least margin)
-            const maxX = Math.max(margin, window.innerWidth - btnWidth - margin);
-            const maxY = Math.max(margin, window.innerHeight - btnHeight - margin);
+            // Increase safety margin to keep button on screen for both mobile and desktop
+            // Use 80px margin from all edges to ensure it never disappears
+            const margin = 80;
+            const maxX = window.innerWidth - btnWidth - margin;
+            const maxY = window.innerHeight - btnHeight - margin;
 
             let newX, newY;
             let attempts = 0;
@@ -675,7 +694,7 @@
 
             // Keep trying until we find a position that doesn't overlap with Yes button
             do {
-                // Ensure min position is at least 'margin' (e.g. 50px)
+                // Ensure min position is at least 'margin' (80px from all edges)
                 newX = margin + Math.random() * (maxX - margin);
                 newY = margin + Math.random() * (maxY - margin);
 
@@ -883,11 +902,11 @@
                 spawnPhotoHeart(numberOfPhotos);
             }, spawnInterval);
 
-            // Spawn a few immediately if requested
+            // Spawn immediately if requested
             if (immediate) {
                 for (let i = 0; i < 5; i++) {
-                    // Very short delays for instant burst
-                    setTimeout(() => spawnPhotoHeart(numberOfPhotos), i * 200);
+                    // Spawn instantly, no delay!
+                    spawnPhotoHeart(numberOfPhotos);
                 }
             }
         }
