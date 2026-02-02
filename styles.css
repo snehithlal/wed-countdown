@@ -1,0 +1,528 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: galaxyMove 15s ease infinite;
+    overflow: auto;
+    position: relative;
+}
+
+@keyframes galaxyMove {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Stars background */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+/* Shooting stars */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+    animation: shoot 3s linear infinite;
+}
+
+@keyframes shoot {
+    0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-1000px, 1000px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* Floating hearts background */
+.heart-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 10s infinite;
+    opacity: 0.6;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 3rem 2rem;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(147, 112, 219, 0.3),
+        inset 0 0 50px rgba(255, 255, 255, 0.05);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    z-index: 100;
+    animation: slideIn 0.8s ease-out, containerFloat 6s ease-in-out infinite;
+}
+
+@keyframes containerFloat {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: scale(0.5) translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.emoji {
+    font-size: 80px;
+    animation: bounce 2s infinite;
+    display: inline-block;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.1);
+    }
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 2.5rem;
+    margin: 1.5rem 0;
+    animation: pulse 2s infinite;
+    text-shadow: 0 0 20px rgba(255, 182, 193, 0.8),
+        0 0 40px rgba(255, 105, 180, 0.5);
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+    }
+
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 30px rgba(255, 182, 193, 1),
+            0 0 50px rgba(255, 105, 180, 0.8);
+    }
+}
+
+.question {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 80px;
+    position: relative;
+}
+
+button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+#yesBtn {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    color: white;
+    animation: glow 2s infinite;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4),
+            0 0 30px rgba(255, 107, 157, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 30px rgba(255, 107, 157, 0.8),
+            0 0 50px rgba(255, 107, 157, 0.6);
+    }
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(255, 107, 157, 0.6),
+        0 0 60px rgba(255, 107, 157, 0.8);
+}
+
+#noBtn {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: absolute;
+    transition: all 0.2s ease;
+}
+
+#noBtn:hover {
+    transform: scale(0.95);
+}
+
+/* Success screen */
+.success-screen {
+    display: none;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-screen.active {
+    display: block;
+}
+
+.main-screen.hidden {
+    display: none;
+}
+
+.celebration {
+    font-size: 100px;
+    margin: 20px 0;
+}
+
+.success-message {
+    font-size: 2rem;
+    color: #ffffff;
+    margin: 20px 0;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+}
+
+.love-note {
+    font-size: 1.2rem;
+    color: #ffffff;
+    line-height: 1.6;
+    margin-top: 20px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f0f;
+    animation: confetti-fall 3s linear infinite;
+}
+
+@keyframes confetti-fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .question {
+        font-size: 1.4rem;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+
+    .emoji {
+        font-size: 60px;
+    }
+
+    .container {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* Additional cute animation for yes button */
+@keyframes heartbeat {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    75% {
+        transform: scale(1.1);
+    }
+}
+
+.heartbeat {
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes flash {
+    0%,
+    100% {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    }
+
+    50% {
+        background: linear-gradient(135deg, #ff6b9d, #c06c84, #6e4555);
+    }
+}
+
+/* Countdown timer styles */
+.countdown-container {
+    margin: 30px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 105, 180, 0.2) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(255, 105, 180, 0.2);
+}
+
+.countdown-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.time-unit {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    min-width: 80px;
+}
+
+.time-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff6b9d;
+    display: block;
+    text-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
+}
+
+.time-label {
+    font-size: 0.9rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .time-unit {
+        min-width: 70px;
+        padding: 10px 15px;
+    }
+
+    .time-number {
+        font-size: 1.5rem;
+    }
+
+    .time-label {
+        font-size: 0.75rem;
+    }
+
+    .countdown-title {
+        font-size: 1.2rem;
+    }
+
+    /* Make countdown container more compact on mobile */
+    .container {
+        padding: 2rem 1.5rem;
+    }
+
+    /* Make photos smaller on mobile and ensure they're visible */
+    .photo-tile {
+        width: 100px;
+        min-height: 75px;
+        z-index: 50 !important;
+    }
+
+    /* Enable scrolling on mobile to prevent content from being cropped */
+    body {
+        overflow: auto;
+        min-height: 100vh;
+        height: auto;
+    }
+}
+
+/* Photo Tiles */
+.photo-tile {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    min-height: 120px;
+    background: transparent;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 105, 180, 0.3);
+    border-radius: 15px;
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.photo-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    aspect-ratio: 1/1;
+}
+
+.photo-float {
+    animation: floatingTile 15s linear forwards;
+}
+
+@keyframes floatingTile {
+    0% {
+        transform: translateY(110vh) rotate(-10deg) scale(0.6);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-20vh) rotate(10deg) scale(1.1);
+        opacity: 0;
+    }
+}
