@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Marry Me? 💍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: galaxyMove 15s ease infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes galaxyMove {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Stars background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) rotate(-45deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-1000px, 1000px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 10s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 3rem 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(147, 112, 219, 0.3),
+                inset 0 0 50px rgba(255, 255, 255, 0.05);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s ease-out, float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scale(0.5) translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .emoji {
+            font-size: 80px;
+            animation: bounce 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin: 1.5rem 0;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.5);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+            }
+
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 30px rgba(255, 182, 193, 1),
+                    0 0 50px rgba(255, 105, 180, 0.8);
+            }
+        }
+
+        .question {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 80px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            animation: glow 2s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4),
+                    0 0 30px rgba(255, 107, 157, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 4px 30px rgba(255, 107, 157, 0.8),
+                    0 0 50px rgba(255, 107, 157, 0.6);
+            }
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 107, 157, 0.6),
+                0 0 60px rgba(255, 107, 157, 0.8);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        #noBtn:hover {
+            transform: scale(0.95);
+        }
+
+        /* Success screen */
+        .success-screen {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-screen.active {
+            display: block;
+        }
+
+        .main-screen.hidden {
+            display: none;
+        }
+
+        .celebration {
+            font-size: 100px;
+            margin: 20px 0;
+        }
+
+        .success-message {
+            font-size: 2rem;
+            color: #ffffff;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+        }
+
+        .love-note {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .question {
+                font-size: 1.4rem;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .emoji {
+                font-size: 60px;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Additional cute animation for yes button */
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+            75% {
+                transform: scale(1.1);
+            }
+        }
+
+        .heartbeat {
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes flash {
+
+            0%,
+            100% {
+                background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            }
+
+            50% {
+                background: linear-gradient(135deg, #ff6b9d, #c06c84, #6e4555);
+            }
+        }
+
+        /* Countdown timer styles */
+        .countdown-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 105, 180, 0.2) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+                0 0 40px rgba(255, 105, 180, 0.2);
+        }
+
+        .countdown-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            min-width: 80px;
+        }
+
+        .time-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b9d;
+            display: block;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .time-unit {
+                min-width: 70px;
+                padding: 10px 15px;
+            }
+
+            .time-number {
+                font-size: 1.5rem;
+            }
+
+            .time-label {
+                font-size: 0.75rem;
+            }
+
+            .countdown-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Stars and cosmic background -->
+    <div class="stars" id="starsContainer"></div>
+
+    <div class="container">
+        <!-- Main Question Screen -->
+        <div class="main-screen" id="mainScreen">
+            <div class="emoji">✨</div>
+            <h1>My Dearest Piyu 💫</h1>
+            <p class="question">In this infinite universe, you're my everything. Will you marry me? 💍</p>
+            <div class="buttons">
+                <button id="yesBtn" onclick="handleYes()">Yes! Forever & Always 💕</button>
+                <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">Maybe not... 😢</button>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="success-screen" id="successScreen">
+            <div class="celebration">✨🌟💫</div>
+            <div class="success-message">She said YES! Our stars aligned! 🌌💍</div>
+            <div class="emoji" id="coupleEmoji">👰‍♀️💖🤵‍♂️</div>
+
+            <!-- Countdown Timer - Now shows first! -->
+            <div class="countdown-container" id="countdownContainer">
+                <div class="countdown-title">Until We Become One ✨ May 10, 2026</div>
+                <div class="countdown-timer">
+                    <div class="time-unit">
+                        <span class="time-number" id="days">00</span>
+                        <span class="time-label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="hours">00</span>
+                        <span class="time-label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="minutes">00</span>
+                        <span class="time-label">Minutes</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-number" id="seconds">00</span>
+                        <span class="time-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="love-note" id="loveNote">
+                Like stars in an infinite cosmos, our love knows no bounds 💫<br><br>
+                <span id="funnyText">Preparing for our forever journey...</span>
+            </p>
+
+            <div class="celebration">🌠💝🌠</div>
+            <div id="extraFunny" style="margin-top: 20px; font-size: 1rem; color: #ffffff;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create twinkling stars and shooting stars
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+
+            // Create regular twinkling stars
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+
+            // Create shooting stars
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.animationDelay = Math.random() * 5 + 's';
+                shootingStar.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(shootingStar);
+            }
+        }
+
+        createStars();
+
+        // Move the No button away
+        let moveCount = 0;
+        const messages = [
+            "Maybe not... 😢",
+            "But I'll debug all your problems! 💻",
+            "I'll be your permanent dance partner! 💃",
+            "Teacher + Developer = Perfect! 📚💻",
+            "I'll learn all your dance moves! 🕺",
+            "You teach kids, I'll teach code! 👨‍🏫",
+            "My code runs on your love! ❤️",
+            "I can't dance but I can love! 💕",
+            "You choreograph, I'll code! 🎭💻",
+            "I'll attend all your performances! 🎪",
+            "Bug-free love guaranteed! 🐛❌",
+            "My only successful loop: loving you! 🔄",
+            "You're the rhythm to my algorithm! 🎵",
+            "I'll learn Bharatanatyam for you! 💃😅",
+            "Piyu.setStatus('MyWife'); 💍",
+            "while(true) { loveYou(); } ♾️"
+        ];
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const container = document.querySelector('.container');
+
+            // Get container and button dimensions
+            const containerRect = container.getBoundingClientRect();
+            const noBtnRect = noBtn.getBoundingClientRect();
+            const yesBtnRect = yesBtn.getBoundingClientRect();
+
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Calculate safe boundaries
+            const maxX = containerRect.width - btnWidth - 40;
+            const maxY = 200;
+
+            let newX, newY;
+            let attempts = 0;
+            const maxAttempts = 50;
+
+            // Keep trying until we find a position that doesn't overlap with Yes button
+            do {
+                newX = Math.random() * maxX;
+                newY = Math.random() * maxY - 100;
+
+                // Calculate the would-be position of No button
+                const noLeft = containerRect.left + newX;
+                const noTop = containerRect.top + newY + 200; // approximate offset
+                const noRight = noLeft + btnWidth;
+                const noBottom = noTop + btnHeight;
+
+                // Check if it overlaps with Yes button (with extra padding)
+                const padding = 20;
+                const overlaps = !(
+                    noRight + padding < yesBtnRect.left ||
+                    noLeft - padding > yesBtnRect.right ||
+                    noBottom + padding < yesBtnRect.top ||
+                    noTop - padding > yesBtnRect.bottom
+                );
+
+                attempts++;
+
+                if (!overlaps) break;
+
+            } while (attempts < maxAttempts);
+
+            // Apply position with smooth transition
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+
+            // Update button text with messages
+            if (moveCount < messages.length) {
+                noBtn.textContent = messages[moveCount];
+                moveCount++;
+            } else {
+                // After all messages, start making Yes button bigger and more tempting
+                noBtn.textContent = "Just give up and say yes! 😄";
+            }
+
+            // Make Yes button grow and more prominent
+            const currentSize = parseFloat(getComputedStyle(yesBtn).fontSize);
+            const currentPadding = parseFloat(getComputedStyle(yesBtn).padding);
+            yesBtn.style.fontSize = (currentSize * 1.08) + 'px';
+            yesBtn.style.padding = (currentPadding * 1.05) + 'px';
+            yesBtn.classList.add('heartbeat');
+
+            // Add extra glow to Yes button
+            if (moveCount > 5) {
+                yesBtn.style.boxShadow = '0 6px 30px rgba(255, 107, 157, 0.9), 0 0 80px rgba(255, 107, 157, 0.8)';
+            }
+        }
+
+        // Handle Yes button click
+        function handleYes() {
+            const mainScreen = document.getElementById('mainScreen');
+            const successScreen = document.getElementById('successScreen');
+
+            mainScreen.classList.add('hidden');
+            successScreen.classList.add('active');
+
+            // Start countdown immediately!
+            startCountdown();
+
+            // Create confetti
+            createConfetti();
+
+            // Add more stars
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => createStars(), i * 100);
+            }
+
+            // Funny animated messages sequence
+            const funnyMessages = [
+                "Aligning our stars together... ✨",
+                "Notifying the universe... 🌌",
+                "Reserving our special constellation... 💫",
+                "Ordering celestial decorations... 🌟",
+                "Booking our cosmic venue for May 10... 🏛️✨",
+                "Planning our interstellar honeymoon... 🚀🌙",
+                "Learning the dance of the cosmos... 💃🕺",
+                "Writing our names in the stars... ⭐📝",
+                "Creating our eternal bond... 💖♾️",
+                "Preparing for infinite togetherness... 🌠",
+                "Synchronizing our heartbeats... 💕",
+                "Our forever journey begins... 🌌💍",
+                "May 10th - when two souls become one! ✨💒"
+            ];
+
+            const extraFunnyMessages = [
+                "P.S. I promise you'll always get the aux cord (even for Bollywood songs) 🎵😄",
+                "P.S. I'll sit through all your dance performances without checking my phone 📱💃",
+                "P.S. You teach grace, I'll teach you Git... fair trade? 💻😅",
+                "P.S. I'll be your permanent audience of one 👏💕",
+                "P.S. Warning: My dance moves may cause laughter, but my love is bug-free ❤️",
+                "P.S. You choreograph life, I'll code our future together 🎭💻",
+                "P.S. I'll learn to dance... eventually... maybe... for you! 🕺😂"
+            ];
+
+            let messageIndex = 0;
+            const funnyTextElement = document.getElementById('funnyText');
+
+            // Animate through funny messages
+            const messageInterval = setInterval(() => {
+                if (messageIndex < funnyMessages.length) {
+                    funnyTextElement.textContent = funnyMessages[messageIndex];
+                    funnyTextElement.style.animation = 'none';
+                    setTimeout(() => {
+                        funnyTextElement.style.animation = 'pulse 0.5s';
+                    }, 10);
+                    messageIndex++;
+                } else {
+                    clearInterval(messageInterval);
+
+                    // Show final message with extra funny note
+                    setTimeout(() => {
+                        const extraFunny = document.getElementById('extraFunny');
+                        const randomMessage = extraFunnyMessages[Math.floor(Math.random() * extraFunnyMessages.length)];
+                        extraFunny.innerHTML = `<strong>${randomMessage}</strong>`;
+                        extraFunny.style.animation = 'slideIn 1s ease-out';
+                    }, 1000);
+                }
+            }, 800);
+
+            // Make emojis dance
+            const coupleEmoji = document.getElementById('coupleEmoji');
+            setInterval(() => {
+                coupleEmoji.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            }, 500);
+
+            // Play celebration sound effect (visual)
+            setTimeout(() => {
+                document.body.style.animation = 'flash 0.5s';
+            }, 2000);
+        }
+
+        // Countdown timer function
+        function startCountdown() {
+            const weddingDate = new Date('2026-05-10T00:00:00').getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+
+                if (distance < 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    document.querySelector('.countdown-title').textContent = "Today's The Day! 🎉💒";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#c06c84', '#9370db', '#ba55d3', '#da70d6', '#ee82ee'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Initial position for No button
+        window.onload = function () {
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'relative';
+            noBtn.style.left = '0px';
+            noBtn.style.top = '0px';
+        };
+    </script>
+</body>
+
+</html>
