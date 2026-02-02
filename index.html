@@ -477,10 +477,12 @@
                 padding: 2rem 1.5rem;
             }
 
-            /* Make photos smaller on mobile so they're more visible */
+            /* Make photos smaller on mobile and ensure they're visible */
             .photo-tile {
                 width: 100px;
                 min-height: 75px;
+                z-index: 50 !important;
+                /* Ensure visibility over background on mobile */
             }
 
             /* Enable scrolling on mobile to prevent content from being cropped */
@@ -558,7 +560,7 @@
         <!-- Main Question Screen -->
         <div class="main-screen" id="mainScreen">
             <div class="emoji">✨</div>
-            <h1>My Dearest Piyu 💫</h1>
+            <h1>My Piyu 💫</h1>
             <p class="question">In this infinite universe, you're my everything. Will you marry me? 💍</p>
             <div class="buttons">
                 <button id="yesBtn" onclick="handleYes()">Yes! Forever & Always 💕</button>
@@ -597,7 +599,7 @@
 
             <p class="love-note" id="loveNote">
                 Like stars in an infinite cosmos, our love knows no bounds 💫<br><br>
-                <span id="funnyText">Preparing for our forever journey...</span>
+                <span id="funnyText">Initializing marriage protocol...</span>
             </p>
 
             <div class="celebration">🌠💝🌠</div>
@@ -771,29 +773,30 @@
 
             // Funny animated messages sequence
             const funnyMessages = [
-                "Aligning our stars together... ✨",
-                "Notifying the universe... 🌌",
-                "Reserving our special constellation... 💫",
-                "Ordering celestial decorations... 🌟",
-                "Booking our cosmic venue for May 10... 🏛️✨",
-                "Planning our interstellar honeymoon... 🚀🌙",
-                "Learning the dance of the cosmos... 💃🕺",
-                "Writing our names in the stars... ⭐📝",
-                "Creating our eternal bond... 💖♾️",
-                "Preparing for infinite togetherness... 🌠",
-                "Synchronizing our heartbeats... 💕",
-                "Our forever journey begins... 🌌💍",
-                "May 10th - when two souls become one! ✨💒"
+                "Initializing marriage.exe... Loading... ✨",
+                "Downloading patience.zip (This may take 50+ years) 🌌",
+                "Installing 'Husband 2.0' (Bug fixes included!) 💫",
+                "Warning: Storage full of love and bad jokes 🌟",
+                "Syncing calendar... May 10, 2026 locked! 📅✨",
+                "Compiling list of dance moves to learn... Error 404 �😅",
+                "Calculating optimal Netflix binge schedule... �🍿",
+                "Backing up bachelor mode... Deleting... Done! �❌",
+                "Creating joint account for snack funds... 🍫�",
+                "Upgrading relationship status to 'Forever' ♾️💖",
+                "Learning to share the blanket... Still loading... �️",
+                "Activating 'Yes Dear' auto-response mode 🤖�",
+                "May 10th - when two souls become one... and one remote! ✨�"
             ];
 
             const extraFunnyMessages = [
-                "P.S. I promise you'll always get the aux cord (even for Bollywood songs) 🎵😄",
-                "P.S. I'll sit through all your dance performances without checking my phone 📱💃",
-                "P.S. You teach grace, I'll teach you Git... fair trade? 💻😅",
-                "P.S. I'll be your permanent audience of one 👏💕",
-                "P.S. Warning: My dance moves may cause laughter, but my love is bug-free ❤️",
-                "P.S. You choreograph life, I'll code our future together 🎭💻",
-                "P.S. I'll learn to dance... eventually... maybe... for you! 🕺😂"
+                "P.S. You teach grace, I'll teach you Git... fair trade? 👨‍💻�",
+                "P.S. I promise to debug your life, but I can't fix my dance moves ��",
+                "P.S. You get the aux cord 24/7. Yes, even for Bollywood remixes 🎵😅",
+                "P.S. I'll attend every performance... even the 6-hour ones 🎭☕",
+                "P.S. Warning: Marriage includes unlimited dad jokes (no refunds) 😂❌",
+                "P.S. I'll learn Bharatanatyam... right after I finish learning to cook 🍳💃",
+                "P.S. You choreograph our life, I'll just try not to trip 🤷‍♂️�",
+                "P.S. My code compiles. My dance... let's not talk about it ��"
             ];
 
             let messageIndex = 0;
