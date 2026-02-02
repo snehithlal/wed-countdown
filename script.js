@@ -64,9 +64,12 @@ function moveButton() {
     const yesBtn = document.getElementById('yesBtn');
 
     // Force position fixed on first move to allow it to leave the container
+    // CRITICAL: Move button to body to escape container's transform (which creates containing block)
     if (noBtn.style.position !== 'fixed') {
         noBtn.style.position = 'fixed';
         noBtn.style.zIndex = '1000';
+        // Move to body so fixed positioning works relative to viewport, not transformed container
+        document.body.appendChild(noBtn);
     }
 
     // Get button dimensions
@@ -75,8 +78,8 @@ function moveButton() {
     const yesBtnRect = yesBtn.getBoundingClientRect();
 
     // Increase safety margin to keep button on screen for both mobile and desktop
-    // Use 80px margin from all edges to ensure it never disappears
-    const margin = 80;
+    // Use larger margin for viewport edges to ensure button is always fully visible
+    const margin = 100;
     const maxX = window.innerWidth - btnWidth - margin;
     const maxY = window.innerHeight - btnHeight - margin;
 
@@ -86,9 +89,19 @@ function moveButton() {
 
     // Keep trying until we find a position that doesn't overlap with Yes button
     do {
-        // Ensure min position is at least 'margin' (80px from all edges)
-        newX = margin + Math.random() * (maxX - margin);
-        newY = margin + Math.random() * (maxY - margin);
+        // Ensure min position is at least 'margin' from all edges
+        // Use Math.max to ensure we never go below minimum position
+        const minX = margin;
+        const minY = margin;
+        const availableWidth = Math.max(0, maxX - margin);
+        const availableHeight = Math.max(0, maxY - margin);
+
+        newX = minX + Math.random() * availableWidth;
+        newY = minY + Math.random() * availableHeight;
+
+        // Clamp values to ensure they're within bounds
+        newX = Math.max(margin, Math.min(newX, maxX));
+        newY = Math.max(margin, Math.min(newY, maxY));
 
         // Check if it overlaps with Yes button (with extra padding)
         const padding = 60; // Larger padding to be safe
@@ -143,6 +156,12 @@ function moveButton() {
 function handleYes() {
     const mainScreen = document.getElementById('mainScreen');
     const successScreen = document.getElementById('successScreen');
+    const noBtn = document.getElementById('noBtn');
+
+    // Hide the No button
+    if (noBtn) {
+        noBtn.style.display = 'none';
+    }
 
     mainScreen.classList.add('hidden');
     successScreen.classList.add('active');

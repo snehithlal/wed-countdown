@@ -14,10 +14,13 @@ body {
     background-size: 400% 400%;
     animation: galaxyMove 15s ease infinite;
     overflow: auto;
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling from button movement */
     position: relative;
 }
 
 @keyframes galaxyMove {
+
     0%,
     100% {
         background-position: 0% 50%;
@@ -46,6 +49,7 @@ body {
 }
 
 @keyframes twinkle {
+
     0%,
     100% {
         opacity: 0.3;
@@ -130,6 +134,7 @@ body {
 }
 
 @keyframes containerFloat {
+
     0%,
     100% {
         transform: translateY(0px);
@@ -159,6 +164,7 @@ body {
 }
 
 @keyframes bounce {
+
     0%,
     100% {
         transform: translateY(0) scale(1);
@@ -179,6 +185,7 @@ h1 {
 }
 
 @keyframes pulse {
+
     0%,
     100% {
         transform: scale(1);
@@ -231,6 +238,7 @@ button {
 }
 
 @keyframes glow {
+
     0%,
     100% {
         box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4),
@@ -349,6 +357,7 @@ button {
 
 /* Additional cute animation for yes button */
 @keyframes heartbeat {
+
     0%,
     100% {
         transform: scale(1);
@@ -372,6 +381,7 @@ button {
 }
 
 @keyframes flash {
+
     0%,
     100% {
         background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
